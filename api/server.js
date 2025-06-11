@@ -1,14 +1,14 @@
 const express = require('express');
+const serverless = require('serverless-http');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const cors = require('cors');
 app.use(cors());
-// Path to your data.json file
-const dataFilePath = path.join(__dirname, 'data.json');
+
+// Correct path for reading data.json when deployed
+const dataFilePath = path.join(__dirname, '../data.json');
 
 app.get('/', (req, res) => {
   fs.readFile(dataFilePath, 'utf8', (err, data) => {
@@ -24,6 +24,5 @@ app.get('/', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = app;
+module.exports.handler = serverless(app);
