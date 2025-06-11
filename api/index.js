@@ -7,8 +7,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-// Correct path for reading data.json when deployed
-const dataFilePath = path.join(__dirname, '../data.json');
+const dataFilePath = path.join(__dirname, 'data.json'); // file is now inside /api
 
 app.get('/', (req, res) => {
   fs.readFile(dataFilePath, 'utf8', (err, data) => {
